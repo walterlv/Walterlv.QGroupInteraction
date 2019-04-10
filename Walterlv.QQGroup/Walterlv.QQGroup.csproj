@@ -4,6 +4,7 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net472</TargetFramework>
         <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
         <RootNamespace>Walterlv</RootNamespace>
     </PropertyGroup>
 

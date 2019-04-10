@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:themes="clr-namespace:Walterlv.Themes"
         xmlns:effects="clr-namespace:Walterlv.Effects"
-        mc:Ignorable="d"
-        Title="QQ群发助手" Background="White" Foreground="White">
+        mc:Ignorable="d" MinWidth="480" MinHeight="360" Width="720" Height="480"
+        Title="QQ群发助手" Background="White">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -76,30 +76,79 @@
         <themes:UniversalWindow FrameColor="#3448a1" InactiveFrameColor="#3e58c9" />
     </themes:UniversalWindowStyle.Window>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="112"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="48" />
-        </Grid.RowDefinitions>
-        <Border>
-            <Border.Background>
-                <LinearGradientBrush>
-                    <GradientStop Offset="0" Color="#319ce9" />
-                    <GradientStop Offset="1" Color="#0086f1" />
-                </LinearGradientBrush>
-            </Border.Background>
-            <TextBlock x:Name="GroupNameTextBlock" Text="QQ Group Message"
+        <Grid x:Name="SendingPanel" ZIndex="1" Background="#af000000" Visibility="Collapsed">
+            <Border Width="320" Height="240" Background="White" BorderThickness="1" BorderBrush="#3448a1">
+                <TextBlock FontSize="16" LineHeight="32" Margin="80 0 40 0" VerticalAlignment="Center">
+                    <Run Text="正在群发……" />
+                    <LineBreak />
+                    <Run Text="当前发送：" /><Run x:Name="CurrentSendingRun" Text="" />
+                    <LineBreak />
+                    <Run Text="计数：" /><Run x:Name="HasSentRun" Text="0" />
+                    <Run Text="/" />
+                    <Run x:Name="ToSendRun" Text="0" />
+                </TextBlock>
+            </Border>
+            <Border Width="320" Height="240">
+                <Button HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Width="32" Height="32" effects:TiltEffect2D.IsEnabled="True"
+                        Click="CancelButton_OnClick">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="Bd" Background="Transparent">
+                                <TextBlock x:Name="Ft" FontSize="16" FontFamily="Segoe MDL2 Assets" Text=""
+                                           Foreground="#3448a1"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Ft" Property="Foreground" Value="#289cff" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Ft" Property="Foreground" Value="#0081ef" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Border>
+        </Grid>
+        <Grid x:Name="RootPanel">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="112" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="48" />
+            </Grid.RowDefinitions>
+            <Border>
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0" Color="#319ce9" />
+                        <GradientStop Offset="1" Color="#0086f1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <TextBlock x:Name="GroupNameTextBlock" Text="QQ Group Message"
                        Margin="12" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                        Foreground="White" FontSize="40" FontWeight="Thin" />
-        </Border>
-        <TextBox Grid.Row="1" BorderThickness="0" FontSize="20" Padding="12 8" />
-        <Button Grid.Row="2" Content="群发" FontSize="16"
-                MinWidth="120" Height="32" Margin="0 0 12 8"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                effects:TiltEffect2D.IsEnabled="True" Click="ButtonExit_Click">
-            <Button.BorderBrush>
-                <effects:RevealBorderBrush Color="White" />
-            </Button.BorderBrush>
-        </Button>
+            </Border>
+            <TextBox x:Name="MessageTextBox" Grid.Row="1" TextWrapping="WrapWithOverflow"
+                 BorderThickness="0" FontSize="20" Padding="12 8 12 0" />
+            <UniformGrid Grid.Row="2" Rows="1" HorizontalAlignment="Right" Margin="0 0 10 8">
+                <Button Content="单发" FontSize="16"
+                    MinWidth="120" Height="32" Margin="2 0"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    effects:TiltEffect2D.IsEnabled="True" Click="SendSingleButton_Click">
+                    <Button.BorderBrush>
+                        <effects:RevealBorderBrush Color="White" />
+                    </Button.BorderBrush>
+                </Button>
+                <Button Content="群发" FontSize="16"
+                    MinWidth="120" Height="32" Margin="2 0"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    effects:TiltEffect2D.IsEnabled="True" Click="SendMultipleButton_Click">
+                    <Button.BorderBrush>
+                        <effects:RevealBorderBrush Color="White" />
+                    </Button.BorderBrush>
+                </Button>
+            </UniformGrid>
+        </Grid>
     </Grid>
 </Window>

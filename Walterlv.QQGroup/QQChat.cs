@@ -3,17 +3,34 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Walterlv
 {
-    public class QQGroup
+    public class QQChat
     {
         public string Name { get; private set; }
-        private int Hwnd;
+        private IntPtr Hwnd;
 
-        public static IReadOnlyList<QQGroup> Find()
+        public async Task<bool> SendMessageAsync(string text)
         {
-            var groupList = new List<QQGroup>();
+            SwitchToThisWindow(Hwnd, true);
+
+            Clipboard.SetDataObject(text, true, 3, 100);
+
+            await Task.Delay(80);
+            SendKeys.SendWait("^a");
+            await Task.Delay(50);
+            SendKeys.SendWait("^v");
+            await Task.Delay(50);
+            SendKeys.SendWait("{Enter}");
+
+            return true;
+        }
+
+        public static IReadOnlyList<QQChat> Find()
+        {
+            var groupList = new List<QQChat>();
             EnumWindows(OnWindowEnum, 0);
             return groupList;
 
@@ -24,16 +41,16 @@ namespace Walterlv
                     StringBuilder lptrString = new StringBuilder(512);
                     StringBuilder lpString = new StringBuilder(512);
                     GetClassName(hwnd, lpString, lpString.Capacity);
-                    if (lpString.ToString().ToLower() == "txguifoundation")
+                    if (lpString.ToString().Equals("txguifoundation", StringComparison.InvariantCultureIgnoreCase))
                     {
                         GetWindowText(hwnd, lptrString, lptrString.Capacity);
                         string name = lptrString.ToString().Trim();
                         if (name.Length > 0)
                         {
-                            groupList.Add(new QQGroup
+                            groupList.Add(new QQChat
                             {
                                 Name = name,
-                                Hwnd = hwnd,
+                                Hwnd = new IntPtr(hwnd),
                             });
                         }
                     }
@@ -59,5 +76,11 @@ namespace Walterlv
 
         [DllImport("user32.dll")]
         private static extern int GetClassName(int hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string strclassName, string strWindowName);
     }
 }
