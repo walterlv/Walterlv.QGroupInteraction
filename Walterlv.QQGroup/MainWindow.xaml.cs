@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Walterlv.EasiPlugins.Configurations;
 
 namespace Walterlv
 {
@@ -16,11 +18,16 @@ namespace Walterlv
 
         private QQChat _current;
         private CancellationTokenSource _cancellationTokenSource;
+        private readonly List<string> _whiteList = new List<string>();
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             _current = QQChat.Find().FirstOrDefault();
             GroupNameTextBlock.Text = _current?.Name;
+
+            var whiteList = DefaultConfiguration.FromFile("configs.txt")["WhiteList"].ToString()
+                .Split(new char[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+            _whiteList.AddRange(whiteList);
         }
 
         private void SendSingleButton_Click(object sender, RoutedEventArgs e)
@@ -59,7 +66,8 @@ namespace Walterlv
                 {
                     await Task.Delay(200, token);
                 }
-                else if (sentChats.Find(x => x == current.Name) == null)
+                else if (sentChats.Find(x => x == current.Name) == null
+                         && (_whiteList.Count == 0 || _whiteList.Contains(current.Name)))
                 {
                     sentChats.Add(current.Name);
                     CurrentSendingRun.Text = current.Name;
