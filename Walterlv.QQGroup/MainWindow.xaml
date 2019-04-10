@@ -81,13 +81,20 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
-        <Border Background="#0086f1">
-            <Label Content="QQ Group Message" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Foreground="White" FontSize="40" />
+        <Border>
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Offset="0" Color="#319ce9" />
+                    <GradientStop Offset="1" Color="#0086f1" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <TextBlock x:Name="GroupNameTextBlock" Text="QQ Group Message"
+                       Margin="12" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                       Foreground="White" FontSize="40" FontWeight="Thin" />
         </Border>
         <TextBox Grid.Row="1" BorderThickness="0" FontSize="20" Padding="12 8" />
         <Button Grid.Row="2" Content="群发" FontSize="16"
-                MinWidth="160" Height="32" Margin="0 0 12 12"
+                MinWidth="120" Height="32" Margin="0 0 12 8"
                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                 effects:TiltEffect2D.IsEnabled="True" Click="ButtonExit_Click">
             <Button.BorderBrush>

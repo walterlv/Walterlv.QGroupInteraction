@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace Walterlv
 {
@@ -7,6 +9,13 @@ namespace Walterlv
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var groups = QQGroup.Find();
+            GroupNameTextBlock.Text = groups.FirstOrDefault()?.Name;
         }
 
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
