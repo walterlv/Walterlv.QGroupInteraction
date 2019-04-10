@@ -1,0 +1,98 @@
+﻿<Window x:Class="Walterlv.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:themes="clr-namespace:Walterlv.Themes"
+        xmlns:effects="clr-namespace:Walterlv.Effects"
+        mc:Ignorable="d"
+        Title="QQ群发助手" Background="White" Foreground="White">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Walterlv.Themes/Themes/Window.Universal.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="#0188fb" />
+                <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False" />
+                <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+                <Setter Property="Stylus.IsTapFeedbackEnabled" Value="False" />
+                <Setter Property="Stylus.IsTouchFeedbackEnabled" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid Background="{TemplateBinding Background}">
+                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                        BorderBrush="{TemplateBinding BorderBrush}" />
+                                <TextBlock x:Name="ContentTextBlock" Foreground="{TemplateBinding Foreground}"
+                                           Margin="{TemplateBinding Padding}"
+                                           FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding Content}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <!-- When the pointer is over the button. -->
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True" />
+                            <Condition Property="IsStylusOver" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="#289cff" />
+                    </MultiTrigger>
+                    <!-- When the pointer is pressed. -->
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsPressed" Value="True" />
+                            <Condition Property="AreAnyTouchesOver" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="#0081ef" />
+                    </MultiTrigger>
+                    <!-- When the touch device is pressed. -->
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsPressed" Value="True" />
+                            <Condition Property="AreAnyTouchesOver" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="#0081ef" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.Style>
+        <StaticResource ResourceKey="Style.Window.Universal" />
+    </Window.Style>
+    <themes:UniversalWindowStyle.TitleBar>
+        <themes:UniversalTitleBar ForegroundColor="White" InactiveForegroundColor="#999999"
+                                  ButtonForegroundColor="White" ButtonInactiveForegroundColor="#999999"
+                                  ButtonHoverForeground="White" ButtonHoverBackground="#686868"
+                                  ButtonPressedForeground="White" ButtonPressedBackground="#1e1e1e" />
+    </themes:UniversalWindowStyle.TitleBar>
+    <themes:UniversalWindowStyle.Window>
+        <themes:UniversalWindow FrameColor="#3448a1" InactiveFrameColor="#3e58c9" />
+    </themes:UniversalWindowStyle.Window>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="112"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="48" />
+        </Grid.RowDefinitions>
+        <Border Background="#0086f1">
+            <Label Content="QQ Group Message" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Foreground="White" FontSize="40" />
+        </Border>
+        <TextBox Grid.Row="1" BorderThickness="0" FontSize="20" Padding="12 8" />
+        <Button Grid.Row="2" Content="群发" FontSize="16"
+                MinWidth="160" Height="32" Margin="0 0 12 12"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                effects:TiltEffect2D.IsEnabled="True" Click="ButtonExit_Click">
+            <Button.BorderBrush>
+                <effects:RevealBorderBrush Color="White" />
+            </Button.BorderBrush>
+        </Button>
+    </Grid>
+</Window>
