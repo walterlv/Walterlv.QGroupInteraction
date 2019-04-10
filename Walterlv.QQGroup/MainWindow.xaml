@@ -59,6 +59,9 @@
                         </MultiTrigger.Conditions>
                         <Setter Property="Background" Value="#0081ef" />
                     </MultiTrigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.33" />
+                    </Trigger>
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>
@@ -132,18 +135,26 @@
             <TextBox x:Name="MessageTextBox" Grid.Row="1" TextWrapping="WrapWithOverflow"
                  BorderThickness="0" FontSize="20" Padding="12 8 12 0" />
             <UniformGrid Grid.Row="2" Rows="1" HorizontalAlignment="Right" Margin="0 0 10 8">
-                <Button Content="单发" FontSize="16"
-                    MinWidth="120" Height="32" Margin="2 0"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    effects:TiltEffect2D.IsEnabled="True" Click="SendSingleButton_Click">
+                <Button x:Name="WhiteListButton" Content="编辑白名单" FontSize="16"
+                        MinWidth="120" Height="32" Margin="2 0"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        effects:TiltEffect2D.IsEnabled="True" Click="WhiteListButton_Click">
                     <Button.BorderBrush>
                         <effects:RevealBorderBrush Color="White" />
                     </Button.BorderBrush>
                 </Button>
-                <Button Content="群发" FontSize="16"
-                    MinWidth="120" Height="32" Margin="2 0"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    effects:TiltEffect2D.IsEnabled="True" Click="SendMultipleButton_Click">
+                <Button x:Name="SingleSendButton" Content="单发" FontSize="16"
+                        MinWidth="120" Height="32" Margin="2 0"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        effects:TiltEffect2D.IsEnabled="True" Click="SendSingleButton_Click">
+                    <Button.BorderBrush>
+                        <effects:RevealBorderBrush Color="White" />
+                    </Button.BorderBrush>
+                </Button>
+                <Button x:Name="MultipleSendButton" Content="群发" FontSize="16"
+                        MinWidth="120" Height="32" Margin="2 0"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        effects:TiltEffect2D.IsEnabled="True" Click="SendMultipleButton_Click">
                     <Button.BorderBrush>
                         <effects:RevealBorderBrush Color="White" />
                     </Button.BorderBrush>
