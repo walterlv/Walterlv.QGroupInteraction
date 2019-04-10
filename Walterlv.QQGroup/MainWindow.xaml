@@ -6,7 +6,7 @@
         xmlns:themes="clr-namespace:Walterlv.Themes"
         xmlns:effects="clr-namespace:Walterlv.Effects"
         mc:Ignorable="d" MinWidth="480" MinHeight="360" Width="720" Height="480"
-        Title="QQ群发助手" Background="White">
+        Title="QQ群发助手 - 预览版 v0.1 - walterlv" Background="White">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
